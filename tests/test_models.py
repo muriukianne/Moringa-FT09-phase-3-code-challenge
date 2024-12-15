@@ -1,3 +1,24 @@
+# import unittest
+# from models.author import Author
+# from models.article import Article
+# from models.magazine import Magazine
+
+# class TestModels(unittest.TestCase):
+#     def test_author_creation(self):
+#         author = Author(1, "John Doe")
+#         self.assertEqual(author.name, "John Doe")
+
+#     def test_article_creation(self):
+#         article = Article(1, "Test Title", "Test Content", 1, 1)
+#         self.assertEqual(article.title, "Test Title")
+
+#     def test_magazine_creation(self):
+#         magazine = (1, "Tech Weekly")
+#         self.assertEqual(magazine.name, "Tech Weekly")
+
+# if __name__ == "__main__":
+#     unittest.main()
+
 import unittest
 from models.author import Author
 from models.article import Article
@@ -5,16 +26,25 @@ from models.magazine import Magazine
 
 class TestModels(unittest.TestCase):
     def test_author_creation(self):
-        author = Author(1, "John Doe")
+        # Changed: The constructor only expects a name, not an id
+        author = Author("John Doe")  # Updated to only pass the name
         self.assertEqual(author.name, "John Doe")
 
     def test_article_creation(self):
-        article = Article(1, "Test Title", "Test Content", 1, 1)
+        # Changed: Create an Author and a Magazine object first (not just IDs)
+        author = Author("John Doe")  # Create a proper Author object
+        magazine = Magazine("Tech Weekly", "Technology")  # Create a proper Magazine object
+        
+        article = Article("Test Title", "Test Content", author, magazine)  # Pass Author and Magazine objects
         self.assertEqual(article.title, "Test Title")
+        self.assertEqual(article.author.name, "John Doe")
+        self.assertEqual(article.magazine.name, "Tech Weekly")
 
     def test_magazine_creation(self):
-        magazine = Magazine(1, "Tech Weekly")
+        # Changed: Proper Magazine object creation
+        magazine = Magazine("Tech Weekly", "Technology")  # Create a proper Magazine object
         self.assertEqual(magazine.name, "Tech Weekly")
+        self.assertEqual(magazine.category, "Technology")
 
 if __name__ == "__main__":
     unittest.main()
